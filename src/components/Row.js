@@ -7,15 +7,7 @@ const leafRoot = "movies";
 const movieRef = (movieType) =>
   firebaseDatabase.ref(`${leafRoot}/${movieType}`);
 
-const moviePoster = (movie) => (
-  <img
-    className="row__poster row__posterLarge"
-    src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-    alt={movie.original_name}
-  />
-);
-
-const Row = ({ title, movieType }) => {
+const Row = ({ title, movieType, onMovieSelected }) => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -31,6 +23,15 @@ const Row = ({ title, movieType }) => {
       }
     });
   };
+
+  const moviePoster = (movie) => (
+    <img
+      onClick={() => onMovieSelected(movie)}
+      className="row__poster row__posterLarge"
+      src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+      alt={movie.original_name}
+    />
+  );
 
   return (
     <div className="row">
