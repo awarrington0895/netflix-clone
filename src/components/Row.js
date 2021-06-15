@@ -7,7 +7,7 @@ const leafRoot = "movies";
 const movieRef = (movieType) =>
   firebaseDatabase.ref(`${leafRoot}/${movieType}`);
 
-const moviePoster = movie => (
+const moviePoster = (movie) => (
   <img
     className="row__poster row__posterLarge"
     src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
@@ -20,7 +20,7 @@ const Row = ({ title, movieType }) => {
 
   useEffect(() => {
     fetchMovies(movieType);
-  }, []);
+  }, [movieType]);
 
   const fetchMovies = (movieType) => {
     movieRef(movieType).on("value", (snapshot) => {
@@ -35,9 +35,7 @@ const Row = ({ title, movieType }) => {
   return (
     <div className="row">
       <h2>{title}</h2>
-      <div className="row__posters">
-        {movies.map(moviePoster)}
-      </div>
+      <div className="row__posters">{movies.map(moviePoster)}</div>
     </div>
   );
 };
