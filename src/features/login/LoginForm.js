@@ -1,17 +1,26 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import validator from "validator";
 
 import { login } from "./loginSlice";
+import withModal from "../../common/Modal";
 
-const LoginForm = () => {
+const LoginForm = ({ showModal }) => {
   const [email, setEmail] = useState();
 
   const [password, setPassword] = useState();
 
+  const isUserCredentialsValid = () =>
+    validator.isEmail(email) && validator.isLength(password, { min: 6 });
+
   const dispatch = useDispatch();
 
   const triggerLogin = () => {
-    dispatch(login({ email, password }));
+    if (isUserCredentialsValid()) {
+      dispatch(login({ email, password }));
+    } else {
+      showModal({ message: "your email and password are not correct" });
+    }
   };
 
   const onEmailChanged = (e) => {
@@ -72,4 +81,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default withModal(LoginForm);
