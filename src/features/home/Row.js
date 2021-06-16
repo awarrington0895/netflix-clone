@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { firebaseDatabase } from "../firebase/firebase";
-import { hideLoading, showLoading } from "../state/loadingSlice";
+import { firebaseDatabase } from "../../firebase/firebase";
+import { hideLoading, showLoading } from "../loading/loadingSlice";
 
 const leafRoot = "movies";
 

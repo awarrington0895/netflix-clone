@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import Home from "./Home";
-import Login from "./login/Login";
-import Loading from "./Loading";
+import Home from "../features/home/Home";
+import Login from "../features/login/Login";
+import Loading from "../features/loading/Loading";
 import { useSelector } from "react-redux";
 
 const Layout = () => {

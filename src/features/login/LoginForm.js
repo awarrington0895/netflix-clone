@@ -1,24 +1,17 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
-import { firebaseAuth } from "../../firebase/firebase";
+import { login } from "./loginSlice";
 
 const LoginForm = () => {
   const [email, setEmail] = useState();
 
   const [password, setPassword] = useState();
 
-  const login = () => {
-    firebaseAuth
-      .signInWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
+  const dispatch = useDispatch();
 
-        console.log("Signed in user");
-        console.log(user);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const triggerLogin = () => {
+    dispatch(login({ email, password }));
   };
 
   const onEmailChanged = (e) => {
@@ -49,7 +42,7 @@ const LoginForm = () => {
             onChange={onPasswordChanged}
           />
         </div>
-        <button className="login-body__submit-btn" onClick={login}>
+        <button className="login-body__submit-btn" onClick={triggerLogin}>
           Sign In
         </button>
         <div className="login-body__options">

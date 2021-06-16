@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import Nav from "./Nav";
-import Header from "./Header";
+import Nav from "../../common/Nav";
+import Header from "../../common/Header";
 import Row from "./Row";
 import Detail from "./Detail";
 
