@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import { firebaseDatabase } from "../firebase/firebase";
+import { hideLoading, showLoading } from "../state/loadingSlice";
 
 const leafRoot = "movies";
 
@@ -10,19 +12,26 @@ const movieRef = (movieType) =>
 const Row = ({ title, movieType, onMovieSelected }) => {
   const [movies, setMovies] = useState([]);
 
+  const dispatch = useDispatch();
+
+  const fetchMovies = useCallback(
+    (movieType) => {
+      dispatch(showLoading());
+      movieRef(movieType).on("value", (snapshot) => {
+        const movies = snapshot.val();
+
+        if (movies && movies.length !== 0) {
+          setMovies(() => movies);
+          dispatch(hideLoading());
+        }
+      });
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
     fetchMovies(movieType);
-  }, [movieType]);
-
-  const fetchMovies = (movieType) => {
-    movieRef(movieType).on("value", (snapshot) => {
-      const movies = snapshot.val();
-
-      if (movies && movies.length !== 0) {
-        setMovies(() => movies);
-      }
-    });
-  };
+  }, [movieType, fetchMovies]);
 
   const moviePoster = (movie) => (
     <img

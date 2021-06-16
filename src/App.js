@@ -1,20 +1,15 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Provider } from "react-redux";
 
 import "./App.css";
-import Home from "./components/Home";
-import Login from "./components/login/Login";
+import Layout from "./components/Layout";
+import store from "./store";
 
-const App = () => (
-  <Router>
-    <Switch>
-      <Route exact path="/">
-        <Home />
-      </Route>
-      <Route exact path="/login">
-        <Login />
-      </Route>
-    </Switch>
-  </Router>
-);
+const App = () => {
+  return (
+    <Provider store={store}>
+      <Layout />
+    </Provider>
+  );
+};
 
 export default App;
